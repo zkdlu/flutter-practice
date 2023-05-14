@@ -26,14 +26,13 @@ class HomeScreen extends StatelessWidget {
         future: webtoons,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                var webtoon = snapshot.data![index];
-                return Text(webtoon.title);
-              },
-              separatorBuilder: (context, index) => SizedBox(width: 20),
+            return Column(
+              children: [
+                SizedBox(
+                  height: 50,
+                ),
+                Expanded(child: makeList(snapshot)),
+              ],
             );
           }
           return const Center(
@@ -41,6 +40,45 @@ class HomeScreen extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  ListView makeList(AsyncSnapshot<List<WebtoonModel>> snapshot) {
+    return ListView.separated(
+      scrollDirection: Axis.horizontal,
+      itemCount: snapshot.data!.length,
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      itemBuilder: (context, index) {
+        var webtoon = snapshot.data![index];
+        return Column(
+          children: [
+            Container(
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 15,
+                    offset: const Offset(10, 10),
+                    color: Colors.black.withOpacity(0.3),
+                  )
+                ],
+              ),
+              child: Image.network("https://picsum.photos/200/300"),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              webtoon.title,
+              style: const TextStyle(
+                fontSize: 22,
+              ),
+            ),
+          ],
+        );
+      },
+      separatorBuilder: (context, index) => SizedBox(width: 40),
     );
   }
 }
