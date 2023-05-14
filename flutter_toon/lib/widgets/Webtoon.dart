@@ -16,25 +16,27 @@ class Webtoon extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) =>
                 DetailScreen(title: title, thumb: thumb, id: id),
-            fullscreenDialog: true,
           ),
         );
       },
       child: Column(
         children: [
-          Container(
-            clipBehavior: Clip.hardEdge,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 15,
-                  offset: const Offset(10, 10),
-                  color: Colors.black.withOpacity(0.3),
-                )
-              ],
+          Hero(
+            tag: id,
+            child: Container(
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 15,
+                    offset: const Offset(10, 10),
+                    color: Colors.black.withOpacity(0.3),
+                  )
+                ],
+              ),
+              child: Image.network(thumb),
             ),
-            child: Image.network(thumb),
           ),
           const SizedBox(
             height: 10,
